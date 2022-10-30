@@ -8,7 +8,7 @@ const Products = () => {
   return (
     <section>
       {products.map((products) => (
-        <Product key={products.name}
+        <Product title={products.title} price={products.basePrice}
           {...products[0]}
         />
       ))}
@@ -16,4 +16,7 @@ const Products = () => {
   );
 };
 
+Products.propTypes = {
+
+}
 export default Products;
