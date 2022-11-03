@@ -4,6 +4,7 @@ import Button from '../Button/Button';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 
+
 const Product = props => {
 
   const [currentColor, setCurrentColor] = useState(props.colors[0]);
@@ -14,6 +15,14 @@ const Product = props => {
 
   function getPrice() {
     return props.basePrice + currentSizePrice;
+  }
+
+  const addToCart = {
+    name: props.title,
+    color: currentColor,
+    size: currentSize,
+    price: getPrice(),
+
   }
 
   const prepareColorClassName = (color) => {
@@ -69,7 +78,7 @@ const Product = props => {
               ))}
             </ul>
           </div>
-          <Button className={styles.button}>
+          <Button onClick={(e) => {e.preventDefault(); console.log('AddToCart:', addToCart)}} className={styles.button}>
             <span className="fa fa-shopping-cart" />
           </Button>
         </form>
