@@ -8,13 +8,20 @@ const Product = props => {
 
   const [currentColor, setCurrentColor] = useState(props.colors[0]);
   const [currentSize, setCurrentSize] = useState(props.sizes[0].name);
+  const [currentSizePrice, setCurrentSizePrice] = useState(
+    props.sizes[0].additionalPrice
+  );
+
+  function getPrice() {
+    return props.basePrice + currentSizePrice;
+  }
 
   const prepareColorClassName = (color) => {
     return styles[
       "color" + color[0].toUpperCase() + color.substr(1).toLowerCase()
     ];
   };
-  console.log(props.sizes);
+  
 
   return (
     <article className={styles.product}>
@@ -27,7 +34,7 @@ const Product = props => {
       <div>
         <header>
           <h2 className={styles.name}>{props.title}</h2>
-          <span className={styles.price}>Price: {props.basePrice}$</span>
+          <span className={styles.price}>Price: {getPrice()}$</span>
         </header>
         <form>
           <div className={styles.sizes}>
@@ -35,7 +42,10 @@ const Product = props => {
             <ul className={styles.choices}>
               {props.sizes.map((size) => (
                 <li key={size.name}>
-                  <button type="button" onClick={() => setCurrentSize(size.name)} className={size.name === currentSize ? styles.active : null}>
+                  <button
+                    type="button"
+                    onClick={() => {setCurrentSize(size.name); setCurrentSizePrice(size.additionalPrice)}}
+                    className={size.name === currentSize ? styles.active : null}>
                     {size.name}
                   </button>
                 </li>
@@ -47,7 +57,14 @@ const Product = props => {
             <ul className={styles.choices}>
               {props.colors.map((item) => (
                 <li key={item}>
-                  <button type="button" onClick={() => setCurrentColor(item)} className={clsx(prepareColorClassName(item), item === currentColor && styles.active)} />
+                  <button
+                    type="button"
+                    onClick={() => setCurrentColor(item)}
+                    className={clsx(
+                      prepareColorClassName(item),
+                      item === currentColor && styles.active
+                    )}
+                  />
                 </li>
               ))}
             </ul>
